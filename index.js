@@ -16,15 +16,20 @@ app.get('/', (req, res) => {
   res.send(`My cool API ¯\\_(ツ)_/¯`);
 });
 
+const getPost = async (id) => {
+  const postRes = await fetch(
+    `https://hacker-news.firebaseio.com/v0/item/${id}.json?print=pretty`
+  );
+  return await postRes.json();
+};
+
+app.get('/api/:id', cors(), async (req, res) => {
+  res.json(await getPost(req.params));
+});
+
 app.get('/api/latest', cors(), async (req, res) => {
   const AMOUNT_OF_POSTS = 10;
 
-  const getPost = async (id) => {
-    const postRes = await fetch(
-      `https://hacker-news.firebaseio.com/v0/item/${id}.json?print=pretty`
-    );
-    return await postRes.json();
-  };
   const srotiesRes = await fetch(
     'https://hacker-news.firebaseio.com/v0/newstories.json?print=pretty'
   );
@@ -35,7 +40,7 @@ app.get('/api/latest', cors(), async (req, res) => {
     posts.push(await getPost(postsId[inc]));
   res.json(posts);
 });
-//runkit.com/
-https: app.listen(port, () => {
+
+app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
