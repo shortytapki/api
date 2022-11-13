@@ -1,7 +1,13 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const cors = require('cors');
 
 const app = express();
+app.use(
+  cors({
+    origin: 'https://st-news-api.herokuapp.com/',
+  })
+);
 dotenv.config();
 
 const port = process.env.PORT;
@@ -10,7 +16,7 @@ app.get('/', (req, res) => {
   res.send(`My cool API ¯\\_(ツ)_/¯`);
 });
 
-app.get('/api/latest', async (req, res) => {
+app.get('/api/latest', cors(), async (req, res) => {
   const AMOUNT_OF_POSTS = 10;
 
   const getPost = async (id) => {
