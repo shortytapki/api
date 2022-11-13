@@ -23,7 +23,7 @@ const getPost = async (id) => {
   return await postRes.json();
 };
 
-app.get('/api/:id', cors(), async (req, res) => {
+app.get('/api/post/:id', cors(), async (req, res) => {
   res.json(await getPost(req.params));
 });
 
