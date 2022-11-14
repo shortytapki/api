@@ -26,8 +26,8 @@ const getPost = async (id) => {
 app.get('/api/root/:id', cors(), async (req, res) => {
   const itemId = req.params.id;
   const itemData = await getPost(itemId);
-  const roots = itemData.kids;
-  const comments = [];
+  const roots = itemData?.kids;
+  if (!roots) return res.json([{}]);
   for (let root = 0; root <= roots.length; root++)
     comments.push(await getPost(roots[root]));
   res.json(comments);
