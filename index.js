@@ -30,8 +30,6 @@ app.get('/api/root/:id', cors(), async (req, res) => {
   const comments = [];
   for (let root = 0; root <= roots.length; root++)
     comments.push(await getPost(roots[root]));
-
-  console.log(comments);
 });
 
 app.get('/api/post/:id', cors(), async (req, res) => {
