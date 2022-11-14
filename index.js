@@ -30,13 +30,20 @@ app.get('/api/root/:id', cors(), async (req, res) => {
 
   let comments = [];
   if (!roots) return res.json([{ msg: 'no comments' }]);
-  for (let root = 0; root <= roots.length; root++)
+  for (let root = 0; root < roots.length; root++)
     comments.push(await getPost(roots[root]));
   res.json(comments);
 });
 
-app.get('/api/kids/:kid', cors(), async (req, res) => {
-  res.json(await getPost(req.params.id));
+app.get('/api/kids/:root', cors(), async (req, res) => {
+  console.log(req.params);
+  const root = req.params.root;
+  const { kids: kidsIds } = await getPost(root);
+  let kids = [];
+  for (let kid = 0; kid < kidsIds.length; kid++)
+    kids.push(await getPost(kidsIds[kid]));
+  console.log(kids);
+  res.json(kids);
 });
 
 app.get('/api/latest', cors(), async (req, res) => {
