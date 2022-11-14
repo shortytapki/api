@@ -27,7 +27,9 @@ app.get('/api/root/:id', cors(), async (req, res) => {
   const itemId = req.params.id;
   const itemData = await getPost(itemId);
   const roots = itemData?.kids;
-  if (!roots) return res.json([]);
+
+  let comments = [];
+  if (!roots) return res.json([{ msg: 'no comments' }]);
   for (let root = 0; root <= roots.length; root++)
     comments.push(await getPost(roots[root]));
   res.json(comments);
@@ -52,16 +54,5 @@ app.get('/api/latest', cors(), async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`Server listening on port ${port}`);
 });
-
-// - Должна содержать:
-//   - ссылку на новость ЕСТЬ ----------------------!
-//   - заголовок новости ЕСТЬ ----------------------!
-//   - дату
-//   - автора
-//   - счётчик количества комментариев
-//   - список комментариев в виде дерева
-// - Корневые комментарии подгружаются сразу же при входе на страницу, вложенные - по клику на корневой
-// - На странице должна быть кнопка для принудительного обновления списка комментариев
-// - На странице должна быть кнопка для возврата к списку новостей
