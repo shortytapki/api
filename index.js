@@ -40,7 +40,7 @@ app.get('/api/kids/:root', cors(), async (req, res) => {
   const root = req.params.root;
   const { kids: kidsIds } = await getPost(root);
   let kids = [];
-  if (kids) {
+  if (kidsIds) {
     for (let kid = 0; kid < kidsIds.length; kid++)
       kids.push(await getPost(kidsIds[kid]));
     console.log(kids);
