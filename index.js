@@ -23,6 +23,12 @@ const getPost = async (id) => {
   return await postRes.json();
 };
 
+// Get a comment by ID
+app.get('/api/comment/:id', cors(), async (req, res) => {
+  const data = await getPost(req.params.id);
+  return res.json(data);
+});
+
 // Get post's main comments
 
 app.get('/api/roots/:id', cors(), async (req, res) => {
