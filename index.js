@@ -37,10 +37,6 @@ app.get('/api/roots/:id', cors(), async (req, res) => {
   res.json(comments);
 });
 
-app.get('/api/:item', cors(), async (req, res) => {
-  res.json(await getPost(req.params.item));
-});
-
 // Initial point
 app.get('/api/latest', cors(), async (req, res) => {
   const AMOUNT_OF_POSTS = 20;
