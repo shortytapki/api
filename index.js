@@ -5,7 +5,7 @@ const cors = require('cors');
 const app = express();
 app.use(
   cors({
-    origin: 'https://st-news-api.herokuapp.com/',
+    origin: 'https://st-news-api-production.up.railway.app',
   })
 );
 dotenv.config();
@@ -23,30 +23,31 @@ const getPost = async (id) => {
   return await postRes.json();
 };
 
-app.get('/api/root/:id', cors(), async (req, res) => {
+app.get('/api/kids/:id', cors(), async (req, res) => {
   const itemId = req.params.id;
   const itemData = await getPost(itemId);
   const roots = itemData?.kids;
 
   let comments = [];
-  if (!roots) return res.json([{ msg: 'no comments' }]);
+  if (!roots) return res.json([null]);
   for (let root = 0; root < roots.length; root++)
     comments.push(await getPost(roots[root]));
   res.json(comments);
 });
 
-app.get('/api/kids/:root', cors(), async (req, res) => {
-  console.log(req.params);
-  const root = req.params.root;
-  const { kids: kidsIds } = await getPost(root);
-  let kids = [];
-  if (kidsIds) {
-    for (let kid = 0; kid < kidsIds.length; kid++)
-      kids.push(await getPost(kidsIds[kid]));
-    console.log(kids);
-  }
-  res.json(kids);
-});
+// [ 8952, 9224, 8917, 8884, 8887, 8943, 8869, 8958, 9005, 9671, 8940, 9067, 8908, 9055, 8865, 8881, 8872, 8873, 8955, 10403, 8903, 8928, 9125, 8998, 8901, 8902, 8907, 8894, 8878, 8870, 8980, 8934, 8876 ]
+
+// app.get('/api/kids/:id', cors(), async (req, res) => {
+//   const { kids: kidsIds } = await getPost(req.params.parent);
+//   let replies = [];
+//   if (kids) {
+//     for (let id = 0; id < kidsIds.length; id++)
+//       replies.push(await getPost(kidsIds[id]));
+//   } else {
+//     replies.push(null);
+//   }
+//   res.json(replies);
+// });
 
 app.get('/api/latest', cors(), async (req, res) => {
   const AMOUNT_OF_POSTS = 10;
