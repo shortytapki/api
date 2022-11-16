@@ -45,7 +45,7 @@ app.get('/api/roots/:id', cors(), async (req, res) => {
 
 // Initial point
 app.get('/api/latest', cors(), async (req, res) => {
-  const AMOUNT_OF_POSTS = 20;
+  const AMOUNT_OF_POSTS = 100;
 
   const srotiesRes = await fetch(
     'https://hacker-news.firebaseio.com/v0/newstories.json?print=pretty'
